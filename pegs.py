@@ -6,6 +6,16 @@ import digraphs
 def pegsSolution(gameBoard):
    # Program your solution here
    
+
+
+
+
+
+
+
+
+
+
    # Access functions from the imported files like this:
    n = graphs.N(V, E, u)
    t = digraphs.topOrdering(V, E)

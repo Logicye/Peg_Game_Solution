@@ -98,4 +98,4 @@ def edgeCap(w, f, u, v):
 def augmentingPathCapacity(path, f, w):
    """Given an augmenting path, edge weights w and a valid flow f, returns the capacity of the augmenting path."""
    cap = edgeCap(w, f, path[0], path[1])
-(44 lines left)
+"""(44 lines left)"""

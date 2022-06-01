@@ -35,8 +35,8 @@ boards = {
    'XoXX': [(3, 'L'), (0, 'R')],
    'ooXoo': [],
    'XXoo': [(0, 'R')],
-   'XXoXoXoXo': 'There are multiple solutions.  Check your solution manually',
-   'XXXoXXXoXX': 'There are multiple solutions.  Check your solution manually',
+   'XXoXoXoXo': 'There are multiple solutions.  Check your solution manually' "[(0, 'R'), (2, 'R'), (4, 'R'), (6, 'R')]",
+   'XXXoXXXoXX': 'There are multiple solutions.  Check your solution manually' "[(5, 'R'), (8, 'L'), (1, 'R'), (3, 'R'), (6, 'L'), (9, 'L'), (7, 'L'), (5, 'L'), (3, 'L'), (0, 'R')]",
    'XoooX': None,
    'ooXXXoXoXX': None
 }

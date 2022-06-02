@@ -1,59 +1,75 @@
 from typing import List
-
-
-def Boolean_Array_Convertion(Board):
-    convertedBoard = []
-    for x in Board:
-        if x == 'X':
-            convertedBoard.append(True)
-        elif x == 'o':
-            convertedBoard.append(False)
-    return convertedBoard
+from os import system as sys
+from time import sleep as slp
+from random import randint as rng
    
+def Clear_Terminal():
+    sys('cls')
+
 def Take_New_Game_Board():
-    while True:
-        newGame = input('Enter Starting Sequence: ')
-        
-        # Input santisation complete later
-        for x in newGame:
-            if x == 'X' or x == 'o':
-                continue
-            else:
-                print('Please enter valid sequence, \nfor reference, X\'s represent pins and o\'s represent blank holes. \nPlease remember all inputs are case sensitive.')
-                continue
-    newBoard = Boolean_Array_Convertion(newGame)
+    newBoard = None
+    while Check_Game_Valid(newBoard) == False:
+        newBoard = input("Enter new game string: \n\n\t")
+        if Check_Game_Valid(newBoard) == False:
+            print("\n\tPlease ensure the game string is at least 3 characters in length \n\tand all character are either \"X's\" or \"o's\" (case sensitive).\n")
+            slp(7.25)
     return newBoard
+
+def Generate_Random_Problem(problemLength):
+    newGame = ""
+    for i in range(int(problemLength)):
+        a = rng(0,1)
+        if a == 1:
+            newGame +='X'
+        elif a == 0:
+            newGame +='o'
+    return newGame
+
+def Check_Game_Valid(gameInput):
+    allowedInput = "Xo"
+    if gameInput is None:
+        return False
+    if len(gameInput) < 3:
+        return False
+    for i in gameInput:
+        if i in allowedInput:
+            pass
+        else:
+            return False
+    return True
+    
+
 
 def Possible_Moves(currentGame):
     possibleMoves = list()
-    for x in len(currentGame):
-        if currentGame[x] == True:
+    for i in range(len(currentGame)):
+        if currentGame[i] == 'X':
             # If a pin exists in the current position
-            if x <= 1:
+            if i <= 1:
                 #If the pin is in a starting positon
-                if currentGame[x+2] == True:
-                    continue
+                if currentGame[i+2] == 'X':
+                    pass
                 else:
-                    move = [x, 'R']
+                    move = [i, 'R']
                     possibleMoves.append(move)
-            elif x >= (currentGame.count() - 1):
+            elif i >= (len(currentGame) - 2):
                 #If the pin is in a ending positon
-                if currentGame[x-2] == True:
-                    continue
+                if currentGame[i-2] == 'X':
+                    pass
                 else:
-                    move = [x, 'L']
+                    move = [i, 'L']
                     possibleMoves.append(move)
             else:
                 #If the pin is in a middle position
-                if currentGame[x+2] == True:
-                    continue
+                if currentGame[i+2] == 'X':
+                    pass
                 else:
-                    move = [x, 'R']
+                    move = [i, 'R']
                     possibleMoves.append(move)
-                if currentGame[x-2] == True:
-                    continue
+                if currentGame[i-2] == 'X':
+                    pass
                 else:
-                    move = [x, 'L']
+                    move = [i, 'L']
                     possibleMoves.append(move)
         else:
             continue
@@ -63,54 +79,35 @@ def Possible_Moves(currentGame):
 
 
 
-def pegsSolution(gameBoard):
-    currentGame = []
+def pegsSolution(gameBoard=None):
     solutionPath = list()
-    if gameBoard == None:
-        currentGame = Take_New_Game_Board
-    else:
-        currentGame = Boolean_Array_Convertion(gameBoard)
-
-    while True:
-        possibleMoves = Possible_Moves(currentGame)
-        if possibleMoves == None:
-            solutionPath = None
-            break
+    newGame = gameBoard
+    if Check_Game_Valid(gameBoard) == False:
+        if input("Would you like to generate new puzzle (y/n)?\n\n") == ('y' or 'Y'):
+            print()
+            problemLength = 0
+            while problemLength<3:
+                problemLength = int(input("How long should the problem be?\n\n"))
+            newGame = Generate_Random_Problem(problemLength)
         else:
-            if possibleMoves.count() == 1:
-                moveMade = possibleMoves[0]
-                currentGame[moveMade[0]] = False
-                if moveMade[1] == 'R':
-                    currentGame[moveMade[0] + 2] = True
-                    if currentGame[moveMade[0] + 1] == True:
-                        currentGame[moveMade[0] + 1] =False
-                elif moveMade[1] == 'L':
-                    currentGame[moveMade[0] - 2] = True
-                    if currentGame[moveMade[0] - 1] == True:
-                        currentGame[moveMade[0] - 1] =False
-                solutionPath.append(moveMade)
-            else:
+            newGame = Take_New_Game_Board()
+    print()
+    print(newGame)
+    print()
 
-
+    while newGame.count('X') > 1 or newGame.count('X') == len(newGame):
+        currentlyAvailableMoves = Possible_Moves(newGame)
+        for i in currentlyAvailableMoves:
+            print(i)
+        break
+    
     return solutionPath
 
 
-    
-    
-   
 
-   
-
-
-
-
-
-
-
-   
 
 
 
 if __name__ == '__main__':
    gameBoard = 'XoXX' # should return [(3, 'L'), (0, 'R')]
-   print(pegsSolution(gameBoard))
+   pegsSolution(gameBoard)

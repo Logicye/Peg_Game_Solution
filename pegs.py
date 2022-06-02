@@ -11,7 +11,16 @@ def Boolean_Array_Convertion(Board):
     return convertedBoard
    
 def Take_New_Game_Board():
-    newGame = input('Enter Starting Sequence')
+    while True:
+        newGame = input('Enter Starting Sequence: ')
+        
+        # Input santisation complete later
+        for x in newGame:
+            if x == 'X' or x == 'o':
+                continue
+            else:
+                print('Please enter valid sequence, \nfor reference, X\'s represent pins and o\'s represent blank holes. \nPlease remember all inputs are case sensitive.')
+                continue
     newBoard = Boolean_Array_Convertion(newGame)
     return newBoard
 
@@ -61,6 +70,7 @@ def pegsSolution(gameBoard):
         currentGame = Take_New_Game_Board
     else:
         currentGame = Boolean_Array_Convertion(gameBoard)
+
     while True:
         possibleMoves = Possible_Moves(currentGame)
         if possibleMoves == None:
@@ -68,9 +78,20 @@ def pegsSolution(gameBoard):
             break
         else:
             if possibleMoves.count() == 1:
+                moveMade = possibleMoves[0]
+                currentGame[moveMade[0]] = False
+                if moveMade[1] == 'R':
+                    currentGame[moveMade[0] + 2] = True
+                    if currentGame[moveMade[0] + 1] == True:
+                        currentGame[moveMade[0] + 1] =False
+                elif moveMade[1] == 'L':
+                    currentGame[moveMade[0] - 2] = True
+                    if currentGame[moveMade[0] - 1] == True:
+                        currentGame[moveMade[0] - 1] =False
+                solutionPath.append(moveMade)
+            else:
 
 
-   
     return solutionPath
 
 

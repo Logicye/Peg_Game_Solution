@@ -37,6 +37,7 @@ def Check_Game_Valid(gameInput):
         else:
             return False
     return True
+
     
 
 
@@ -76,11 +77,29 @@ def Possible_Moves(currentGame):
     return possibleMoves
 
 
+def Perform_Move(game, move):
+    outputGame = ""
+    print('--------------')
+    print(game)
+    print(move)
+    print('--------------')
+    if move[1] == 'R':
+        outputGame = game[:move[0]]+'ooX'+game[(move[0]+3):]
+    elif move[1] == 'L':
+        outputGame = game[:(move[0]-2)]+'Xoo'+game[(move[0]+1):]
+    return outputGame
 
+def Undo_Move(previousGameState):
+    return previousGameState
+
+def Print_Game_Progression(gameStack):
+    for i in gameStack:
+        print(gameStack[i])
 
 
 def pegsSolution(gameBoard=None):
     solutionPath = list()
+    solutionStack = list()
     newGame = gameBoard
     if Check_Game_Valid(gameBoard) == False:
         if input("Would you like to generate new puzzle (y/n)?\n\n") == ('y' or 'Y'):
@@ -91,16 +110,97 @@ def pegsSolution(gameBoard=None):
             newGame = Generate_Random_Problem(problemLength)
         else:
             newGame = Take_New_Game_Board()
-    print()
-    print(newGame)
-    print()
+    while newGame.count('X') > 1:
+        slp(2)
+        if newGame == solutionStack[len(solutionStack)-1][0] and len(solutionStack[len(solutionStack)-1][1]):
+            pass
+        else:
+            currentlyAvailableMoves = Possible_Moves(newGame)
+            solutionStack.append(newGame, currentlyAvailableMoves)
 
-    while newGame.count('X') > 1 or newGame.count('X') == len(newGame):
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        #print()
+        #print(newGame)
+        #currentlyAvailableMoves = Possible_Moves(newGame)
+        #for i in currentlyAvailableMoves:
+        #    print(i)
+        #if len(currentlyAvailableMoves) == 1:
+        #    solutionStack.append((newGame, currentlyAvailableMoves[0]))
+        #    newGame = Perform_Move(newGame, currentlyAvailableMoves[0])
+        #    #print(solutionStack)
+        #    print(newGame)
+        #elif len(currentlyAvailableMoves) == 0:
+        #    print(newGame)
+        #    newGame = Undo_Move(solutionStack[len(solutionStack)][0])
+        #    print(newGame)
+        #else:
+        #    pass 
+        #print(solutionStack)
+        #print(solutionStack[0][1][1])
+
+        #-----------------------------
+        #-----Real-Solution-Start-----
+        #-----------------------------------------------------------------------------------
+        #currentlyAvailableMoves = Possible_Moves(newGame)
+        #solutionStack.append((newGame, currentlyAvailableMoves))
+        #if len(solutionStack[0][1]) == 1:
+        #    solutionStack.append((newGame, None))
+        #    newGame = Perform_Move(newGame, currentlyAvailableMoves[0])
+        #    #print(solutionStack)
+        #    print(newGame)
+        #elif len(current):
+        #    pass
+        
+
+        
         currentlyAvailableMoves = Possible_Moves(newGame)
-        for i in currentlyAvailableMoves:
-            print(i)
-        break
-    
+        solutionStack()
+        if newGame == solutionStack[len(solutionStack)-1][0]:
+            Perform_Move()
+            solutionStack.append((newGame, currentlyAvailableMoves))
+            
+
+        if len(currentlyAvailableMoves)>0:
+            newGame = Perform_Move(currentlyAvailableMoves[0])
+            solutionStack.append((newGame,))
+        else:
+            print(newGame)
+            #Undo_Move(solutionStack[len(SolutionStack)-1][1][len(solutionStack)])
+            #solutionStack[len(SolutionStack)-1][0]
+            Undo_Move(solutionStack[len(SolutionStack)-1][0])
+            print(newGame)
+    print('You Won')
+    slp(3)
+
+
+
+
+
+        #-----------------------------------------------------------------------------------
+
+
+    #for i in solutionStack:
+    #    solutionPath.append(i[1])
     return solutionPath
 
 
@@ -110,4 +210,4 @@ def pegsSolution(gameBoard=None):
 
 if __name__ == '__main__':
    gameBoard = 'XoXX' # should return [(3, 'L'), (0, 'R')]
-   pegsSolution(gameBoard)
+   print(pegsSolution(gameBoard))
